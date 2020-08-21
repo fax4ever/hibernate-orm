@@ -13,9 +13,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import org.hibernate.testing.junit4.BaseCoreFunctionalTestCase;
+import org.junit.After;
 import org.junit.Test;
 
 import org.assertj.core.api.Assertions;
+import org.h2.util.DateTimeUtils;
 
 public class JvmTimeZoneHibernateTest extends BaseCoreFunctionalTestCase {
 
@@ -40,6 +42,11 @@ public class JvmTimeZoneHibernateTest extends BaseCoreFunctionalTestCase {
 	@Test
 	public void test_dallas() {
 		withDefaultTimeZone( TimeZone.getTimeZone( "America/Dallas" ), 2 );
+	}
+
+	@After
+	public void clearH2StaticCaches() {
+		DateTimeUtils.resetCalendar();
 	}
 
 	private final void withDefaultTimeZone(TimeZone timeZone, int id) {
